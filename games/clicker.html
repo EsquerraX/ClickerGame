@@ -2,62 +2,55 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-
-  <!-- MODO MOVIL / ANTI ZOOM -->
   <meta name="viewport"
-        content="width=device-width,
-                 initial-scale=1.0,
-                 maximum-scale=1.0,
-                 user-scalable=no">
-
-  <title>Clicker del Tiempo</title>
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cronomante</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-  <div class="game">
+<div class="game">
+  <a href="../index.html">⬅ Volver</a>
 
-    <a href="../index.html">⬅ Volver</a>
+  <h1>⏳ Cronomante</h1>
+  <p class="subtitle">Elige tu camino en el tiempo</p>
 
-    <h1>⏳ Clicker del Tiempo</h1>
-
-    <div id="tiempoBox">
-      <span id="tiempo">0</span> ⏳
-    </div>
-
-    <small>Nivel <strong><span id="nivel">1</span></strong></small>
-
-    <div class="barra">
-      <div class="barra-fill" id="barraFill"></div>
-    </div>
-
-    <!-- BOOST -->
-    <div id="boostContainer" style="display:none;">
-      <small>⚡ Boost: <span id="boostSegundos">0</span>s</small>
-      <div class="barra">
-        <div class="barra-fill" id="boostFill"></div>
-      </div>
-    </div>
-
-    <button onclick="clickTiempo()">Generar Tiempo</button>
-
-    <button onclick="mejorarClick()">
-      Mejorar Click (<span id="costoClick">10</span> ⏳)
-    </button>
-
-    <button onclick="comprarAuto()">
-      Auto Tiempo (+1/s) (<span id="costoAuto">50</span> ⏳)
-    </button>
-
-    <button onclick="activarBoost()">⚡ Boost x2</button>
-
-    <button id="btnBoostGratis" onclick="boostGratis()">
-      🎁 Boost Gratis
-    </button>
-
+  <div id="tiempoBox">
+    <span id="tiempo">0</span> ⏳
   </div>
 
-  <script src="../js/global.js"></script>
-  <script src="../js/clicker.js"></script>
+  <p>Nivel <strong><span id="nivel">1</span></strong></p>
+  <div class="barra"><div class="barra-fill" id="barraFill"></div></div>
+
+  <div class="stats">
+    <p>🧙 Poder: <span id="statPoder">1</span></p>
+    <p>🌊 Flujo: <span id="statFlujo">0</span>/s</p>
+    <p>🌀 Control: <span id="statControl">1.0</span>x</p>
+    <p>🎓 Clase: <strong><span id="claseTexto">Sin elegir</span></strong></p>
+  </div>
+
+  <div id="boostContainer" style="display:none;">
+    <small>🌀 Distorsión activa: <span id="boostSegundos">0</span>s</small>
+    <div class="barra"><div class="barra-fill" id="boostFill"></div></div>
+  </div>
+
+  <button onclick="clickTiempo()">⏳ Canalizar Tiempo</button>
+  <button onclick="mejorarClick()">Mejorar Poder (<span id="costoClick">10</span> ⏳)</button>
+  <button onclick="comprarAuto()">Mejorar Flujo (<span id="costoAuto">50</span> ⏳)</button>
+  <button onclick="activarBoost()">🌀 Distorsión (100 ⏳)</button>
+</div>
+
+<!-- MODAL CLASE -->
+<div id="modalClase" class="modal" style="display:none;">
+  <div class="modal-box">
+    <h2>🎓 Elige tu especialización</h2>
+    <button onclick="elegirClase('poder')">🧙 Poder (+30% click)</button>
+    <button onclick="elegirClase('flujo')">🌊 Flujo (+50% pasivo)</button>
+    <button onclick="elegirClase('control')">🌀 Control (+50% boost)</button>
+  </div>
+</div>
+
+<script src="../js/global.js"></script>
+<script src="../js/clicker.js"></script>
 </body>
 </html>

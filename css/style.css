@@ -323,3 +323,39 @@ button:active {
   0% { transform: scale(0.8); opacity: 0.5; }
   100% { transform: scale(1); opacity: 1; }
 }
+/* ===== MODAL NIVEL RPG ===== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: #111;
+  padding: 20px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 0 30px #000;
+}
+
+.modal-box h2 {
+  margin-top: 0;
+}
+
+.modal-box button {
+  margin-top: 10px;
+}
+/* ===== CLASES RPG ===== */
+.stats p { margin: 4px 0; }
+
+.modal { position: fixed; inset:0; background:rgba(0,0,0,.7);
+  display:flex; align-items:center; justify-content:center; z-index:100; }
+.modal-box { background:#111; padding:20px; border-radius:16px;
+  width:90%; max-width:320px; text-align:center; }
