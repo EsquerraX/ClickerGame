@@ -2,20 +2,46 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+
+  <!-- MODO MOVIL / ANTI ZOOM -->
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no">
+
   <title>Arcade del Tiempo</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <h1>🕹️ Arcade del Tiempo</h1>
-  <h2>⏳ Tiempo total: <span id="tiempo">0</span></h2>
-  <p id="saveStatus">💾 Progreso guardado</p>
+  <div class="game">
 
-  <a href="games/clicker.html">▶ Clicker del Tiempo</a><br><br>
-  <a href="games/reflex.html">▶ Reflejos del Tiempo</a><br><br>
-  <a href="games/logros.html">🏆 Logros</a>
+    <h1>🕹️ Arcade del Tiempo</h1>
+    <p class="subtitle">Gana ⏳ Tiempo • Sube de nivel</p>
+
+    <div id="tiempoBox">
+      <span id="tiempo">0</span> ⏳
+    </div>
+
+    <div class="menu">
+
+      <a class="card" href="games/clicker.html">
+        <h3>⏳ Clicker del Tiempo</h3>
+        <p>Juego principal</p>
+      </a>
+
+      <a class="card" href="games/reflex.html">
+        <h3>⚡ Reflejos del Tiempo</h3>
+        <p>Minijuego</p>
+      </a>
+
+    </div>
+
+    <small class="footer">Progreso guardado automáticamente</small>
+
+  </div>
 
   <script src="js/global.js"></script>
-
 </body>
 </html>

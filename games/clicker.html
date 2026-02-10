@@ -2,6 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+
+  <!-- MODO MOVIL / ANTI ZOOM -->
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no">
+
   <title>Clicker del Tiempo</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -23,9 +31,9 @@
       <div class="barra-fill" id="barraFill"></div>
     </div>
 
-    <!-- BOOST ACTIVO -->
-    <div id="boostContainer" class="boost" style="display:none;">
-      <small>⚡ Boost activo: <span id="boostSegundos">0</span>s</small>
+    <!-- BOOST -->
+    <div id="boostContainer" style="display:none;">
+      <small>⚡ Boost: <span id="boostSegundos">0</span>s</small>
       <div class="barra">
         <div class="barra-fill" id="boostFill"></div>
       </div>
@@ -43,7 +51,6 @@
 
     <button onclick="activarBoost()">⚡ Boost x2</button>
 
-    <!-- BOOST GRATIS -->
     <button id="btnBoostGratis" onclick="boostGratis()">
       🎁 Boost Gratis
     </button>
