@@ -11,11 +11,13 @@ let costoAuto = parseInt(localStorage.getItem("costoAuto")) || 50;
 let nivel = parseInt(localStorage.getItem("nivel")) || 1;
 let progreso = parseInt(localStorage.getItem("progreso")) || 0;
 
-// BOOST
+// BOOST NORMAL
 let boostFin = parseInt(localStorage.getItem("boostFin")) || 0;
 let boostInicio = parseInt(localStorage.getItem("boostInicio")) || 0;
 let boostActivo = boostFin > Date.now();
-let boostGratisFin = parseInt(localStorage.getItem("boostGratisFin")) || 0;
+
+// BOOST GRATIS (UNA SOLA VEZ)
+let boostGratisUsado = localStorage.getItem("boostGratisUsado") === "true";
 
 // =========================
 // UTILIDADES
@@ -33,7 +35,7 @@ function guardar() {
   localStorage.setItem("progreso", progreso);
   localStorage.setItem("boostFin", boostFin);
   localStorage.setItem("boostInicio", boostInicio);
-  localStorage.setItem("boostGratisFin", boostGratisFin);
+  localStorage.setItem("boostGratisUsado", boostGratisUsado);
 }
 
 // =========================
@@ -46,10 +48,6 @@ function sumarProgreso(cantidad) {
   if (progreso >= req) {
     progreso -= req;
     nivel++;
-
-    const nivelEl = document.getElementById("nivel");
-    nivelEl.classList.add("level-up");
-    setTimeout(() => nivelEl.classList.remove("level-up"), 600);
   }
 
   guardar();
@@ -67,8 +65,8 @@ function clickTiempo() {
   sumarProgreso(g);
 
   const box = document.getElementById("tiempoBox");
-  box.classList.add("pulse", "glow");
-  setTimeout(() => box.classList.remove("pulse", "glow"), 200);
+  box.classList.add("glow");
+  setTimeout(() => box.classList.remove("glow"), 200);
 }
 
 // =========================
@@ -93,7 +91,7 @@ function comprarAuto() {
 }
 
 // =========================
-// BOOSTS
+// BOOST NORMAL
 // =========================
 function activarBoost() {
   if (boostActivo) return;
@@ -105,13 +103,20 @@ function activarBoost() {
   }
 }
 
+// =========================
+// BOOST GRATIS (UNA VEZ + REDIRECT)
+// =========================
 function boostGratis() {
-  if (Date.now() < boostGratisFin) return;
+  if (boostGratisUsado) return;
+
+  boostGratisUsado = true;
   boostActivo = true;
   boostInicio = Date.now();
-  boostFin = boostInicio + 15000;
-  boostGratisFin = Date.now() + 60000;
+  boostFin = boostInicio + 20000; // 20s
   guardar();
+
+  // 🔗 REDIRECCIÓN
+  window.location.href = "https://tiyeicaps.github.io/Tj/catalogo.html";
 }
 
 // =========================
@@ -148,6 +153,13 @@ function actualizarUI() {
   const req = requeridoNivel(nivel);
   const pct = Math.min(100, (progreso / req) * 100);
   document.getElementById("barraFill").style.width = pct + "%";
+
+  const btn = document.getElementById("btnBoostGratis");
+  if (boostGratisUsado) {
+    btn.textContent = "🎁 Boost Gratis (usado)";
+    btn.disabled = true;
+    btn.style.opacity = 0.5;
+  }
 }
 
 function actualizarBoostUI() {
@@ -157,12 +169,10 @@ function actualizarBoostUI() {
 
   if (!boostActivo) {
     cont.style.display = "none";
-    cont.classList.remove("boost-activo");
     return;
   }
 
   cont.style.display = "block";
-  cont.classList.add("boost-activo");
 
   const total = boostFin - boostInicio;
   const restante = boostFin - Date.now();
