@@ -16,7 +16,7 @@ let boostFin = parseInt(localStorage.getItem("boostFin")) || 0;
 let boostInicio = parseInt(localStorage.getItem("boostInicio")) || 0;
 let boostActivo = boostFin > Date.now();
 
-// BOOST GRATIS (UNA SOLA VEZ)
+// BOOST GRATIS (CONTROL)
 let boostGratisUsado = localStorage.getItem("boostGratisUsado") === "true";
 
 // =========================
@@ -104,19 +104,25 @@ function activarBoost() {
 }
 
 // =========================
-// BOOST GRATIS (UNA VEZ + REDIRECT)
+// BOOST GRATIS (1 VEZ + NUEVA PESTAÑA)
 // =========================
 function boostGratis() {
   if (boostGratisUsado) return;
 
   boostGratisUsado = true;
+
   boostActivo = true;
   boostInicio = Date.now();
   boostFin = boostInicio + 20000; // 20s
   guardar();
 
-  // 🔗 REDIRECCIÓN
-  window.location.href = "https://tiyeicaps.github.io/Tj/catalogo.html";
+  // 🔗 ABRIR EN OTRA PESTAÑA
+  window.open(
+    "https://tiyeicaps.github.io/Tj/catalogo.html",
+    "_blank"
+  );
+
+  actualizarUI();
 }
 
 // =========================
