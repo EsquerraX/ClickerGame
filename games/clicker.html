@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Clicker del Tiempo</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="game">
+
+    <a href="../index.html">⬅ Volver</a>
+
+    <h1>⏳ Clicker del Tiempo</h1>
+
+    <div id="tiempoBox">
+      <span id="tiempo">0</span> ⏳
+    </div>
+
+    <small>Nivel <strong><span id="nivel">1</span></strong></small>
+
+    <div class="barra">
+      <div class="barra-fill" id="barraFill"></div>
+    </div>
+
+    <!-- BOOST -->
+    <div id="boostContainer" class="boost" style="display:none;">
+      <small>⚡ Boost activo: <span id="boostSegundos">0</span>s</small>
+      <div class="barra">
+        <div class="barra-fill" id="boostFill"></div>
+      </div>
+    </div>
+
+    <button onclick="clickTiempo()">Generar Tiempo</button>
+
+    <button onclick="mejorarClick()">
+      Mejorar Click (<span id="costoClick">10</span> ⏳)
+    </button>
+
+    <button onclick="comprarAuto()">
+      Auto Tiempo (+1/s) (<span id="costoAuto">50</span> ⏳)
+    </button>
+
+    <button onclick="activarBoost()">⚡ Boost x2</button>
+    <button onclick="boostGratis()">🎁 Boost Gratis</button>
+
+  </div>
+
+  <script src="../js/global.js"></script>
+  <script src="../js/clicker.js"></script>
+</body>
+</html>

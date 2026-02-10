@@ -1,0 +1,175 @@
+// =========================
+// DATOS BASE
+// =========================
+let tiempoPorClick = parseInt(localStorage.getItem("tiempoPorClick")) || 1;
+let tiempoPorSegundo = parseInt(localStorage.getItem("tiempoPorSegundo")) || 0;
+
+let costoClick = parseInt(localStorage.getItem("costoClick")) || 10;
+let costoAuto = parseInt(localStorage.getItem("costoAuto")) || 50;
+
+// NIVELES
+let nivel = parseInt(localStorage.getItem("nivel")) || 1;
+let progreso = parseInt(localStorage.getItem("progreso")) || 0;
+
+// BOOST
+let boostFin = parseInt(localStorage.getItem("boostFin")) || 0;
+let boostInicio = parseInt(localStorage.getItem("boostInicio")) || 0;
+let boostActivo = boostFin > Date.now();
+let boostGratisFin = parseInt(localStorage.getItem("boostGratisFin")) || 0;
+
+// =========================
+// UTILIDADES
+// =========================
+function requeridoNivel(n) {
+  return 50 + n * 25;
+}
+
+function guardar() {
+  localStorage.setItem("tiempoPorClick", tiempoPorClick);
+  localStorage.setItem("tiempoPorSegundo", tiempoPorSegundo);
+  localStorage.setItem("costoClick", costoClick);
+  localStorage.setItem("costoAuto", costoAuto);
+  localStorage.setItem("nivel", nivel);
+  localStorage.setItem("progreso", progreso);
+  localStorage.setItem("boostFin", boostFin);
+  localStorage.setItem("boostInicio", boostInicio);
+  localStorage.setItem("boostGratisFin", boostGratisFin);
+}
+
+// =========================
+// PROGRESO
+// =========================
+function sumarProgreso(cantidad) {
+  progreso += cantidad;
+  const req = requeridoNivel(nivel);
+
+  if (progreso >= req) {
+    progreso -= req;
+    nivel++;
+
+    const nivelEl = document.getElementById("nivel");
+    nivelEl.classList.add("level-up");
+    setTimeout(() => nivelEl.classList.remove("level-up"), 600);
+  }
+
+  guardar();
+  actualizarUI();
+}
+
+// =========================
+// CLICK
+// =========================
+function clickTiempo() {
+  const mult = boostActivo ? 2 : 1;
+  const g = tiempoPorClick * mult;
+
+  ganarTiempo(g);
+  sumarProgreso(g);
+
+  const box = document.getElementById("tiempoBox");
+  box.classList.add("pulse", "glow");
+  setTimeout(() => box.classList.remove("pulse", "glow"), 200);
+}
+
+// =========================
+// MEJORAS
+// =========================
+function mejorarClick() {
+  if (gastarTiempo(costoClick)) {
+    tiempoPorClick++;
+    costoClick = Math.floor(costoClick * 1.5);
+    guardar();
+    actualizarUI();
+  }
+}
+
+function comprarAuto() {
+  if (gastarTiempo(costoAuto)) {
+    tiempoPorSegundo++;
+    costoAuto = Math.floor(costoAuto * 1.7);
+    guardar();
+    actualizarUI();
+  }
+}
+
+// =========================
+// BOOSTS
+// =========================
+function activarBoost() {
+  if (boostActivo) return;
+  if (gastarTiempo(100)) {
+    boostActivo = true;
+    boostInicio = Date.now();
+    boostFin = boostInicio + 30000;
+    guardar();
+  }
+}
+
+function boostGratis() {
+  if (Date.now() < boostGratisFin) return;
+  boostActivo = true;
+  boostInicio = Date.now();
+  boostFin = boostInicio + 15000;
+  boostGratisFin = Date.now() + 60000;
+  guardar();
+}
+
+// =========================
+// LOOP
+// =========================
+setInterval(() => {
+  const ahora = Date.now();
+
+  if (boostActivo && ahora > boostFin) {
+    boostActivo = false;
+    boostFin = 0;
+    boostInicio = 0;
+    guardar();
+  }
+
+  if (tiempoPorSegundo > 0) {
+    const mult = boostActivo ? 2 : 1;
+    const g = tiempoPorSegundo * mult;
+    ganarTiempo(g);
+    sumarProgreso(g);
+  }
+
+  actualizarBoostUI();
+}, 1000);
+
+// =========================
+// UI
+// =========================
+function actualizarUI() {
+  document.getElementById("costoClick").textContent = costoClick;
+  document.getElementById("costoAuto").textContent = costoAuto;
+  document.getElementById("nivel").textContent = nivel;
+
+  const req = requeridoNivel(nivel);
+  const pct = Math.min(100, (progreso / req) * 100);
+  document.getElementById("barraFill").style.width = pct + "%";
+}
+
+function actualizarBoostUI() {
+  const cont = document.getElementById("boostContainer");
+  const fill = document.getElementById("boostFill");
+  const txt = document.getElementById("boostSegundos");
+
+  if (!boostActivo) {
+    cont.style.display = "none";
+    cont.classList.remove("boost-activo");
+    return;
+  }
+
+  cont.style.display = "block";
+  cont.classList.add("boost-activo");
+
+  const total = boostFin - boostInicio;
+  const restante = boostFin - Date.now();
+  const pct = Math.max(0, (restante / total) * 100);
+
+  fill.style.width = pct + "%";
+  txt.textContent = Math.ceil(restante / 1000);
+}
+
+window.onload = actualizarUI;
