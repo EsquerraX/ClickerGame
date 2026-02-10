@@ -23,7 +23,7 @@
       <div class="barra-fill" id="barraFill"></div>
     </div>
 
-    <!-- BOOST -->
+    <!-- BOOST ACTIVO -->
     <div id="boostContainer" class="boost" style="display:none;">
       <small>⚡ Boost activo: <span id="boostSegundos">0</span>s</small>
       <div class="barra">
@@ -42,7 +42,11 @@
     </button>
 
     <button onclick="activarBoost()">⚡ Boost x2</button>
-    <button onclick="boostGratis()">🎁 Boost Gratis</button>
+
+    <!-- BOOST GRATIS -->
+    <button id="btnBoostGratis" onclick="boostGratis()">
+      🎁 Boost Gratis
+    </button>
 
   </div>
 
