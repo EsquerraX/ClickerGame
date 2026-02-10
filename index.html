@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- MODO MOVIL / ANTI ZOOM -->
   <meta name="viewport"
         content="width=device-width,
                  initial-scale=1.0,
@@ -18,30 +17,50 @@
   <div class="game">
 
     <h1>🕹️ Arcade del Tiempo</h1>
-    <p class="subtitle">Gana ⏳ Tiempo • Sube de nivel</p>
-
-    <div id="tiempoBox">
-      <span id="tiempo">0</span> ⏳
-    </div>
+    <p class="subtitle">
+      Distintos juegos • Un solo progreso • Elige tu desafío
+    </p>
 
     <div class="menu">
 
+      <!-- CLICKER -->
       <a class="card" href="games/clicker.html">
+        <canvas class="mini-canvas" data-type="clicker"></canvas>
         <h3>⏳ Clicker del Tiempo</h3>
-        <p>Juego principal</p>
+        <p class="tagline">
+          Genera tiempo constantemente y mejora tu producción.
+        </p>
+        <p class="tags">Incremental • Progreso</p>
       </a>
 
+      <!-- REFLEJOS -->
       <a class="card" href="games/reflex.html">
+        <canvas class="mini-canvas" data-type="reflex"></canvas>
         <h3>⚡ Reflejos del Tiempo</h3>
-        <p>Minijuego</p>
+        <p class="tagline">
+          Reacciona en el momento exacto y gana recompensas.
+        </p>
+        <p class="tags">Habilidad • Velocidad</p>
+      </a>
+
+      <!-- RULETA (FIX AQUÍ) -->
+      <a class="card" href="games/ruleta.html">
+        <canvas class="mini-canvas" data-type="ruleta"></canvas>
+        <h3>🎰 Ruleta del Tiempo</h3>
+        <p class="tagline">
+          Arriesga tu tiempo para ganar más… o perderlo.
+        </p>
+        <p class="tags">Azar • Riesgo</p>
       </a>
 
     </div>
 
-    <small class="footer">Progreso guardado automáticamente</small>
+    <small class="footer">
+      El progreso se comparte entre todos los juegos
+    </small>
 
   </div>
 
-  <script src="js/global.js"></script>
+  <script src="js/arcade-canvas.js"></script>
 </body>
 </html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no">
+
+  <title>Ruleta del Tiempo</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="game">
+
+    <a href="../index.html">⬅ Volver</a>
+
+    <h1>🎰 Ruleta del Tiempo</h1>
+
+    <div id="tiempoBox">
+      <span id="tiempo">0</span> ⏳
+    </div>
+
+    <p class="subtitle">
+      Arriesga tiempo para ganar más… o perderlo.
+    </p>
+
+    <div id="ruleta">
+      <div id="puntero">▼</div>
+      <div id="circulo"></div>
+    </div>
+
+    <button id="btnGirar" onclick="girar()">
+      🎰 Girar (Costo: 10 ⏳)
+    </button>
+
+    <p id="resultado" class="resultado"></p>
+
+  </div>
+
+  <script src="../js/global.js"></script>
+  <script src="../js/ruleta.js"></script>
+</body>
+</html>

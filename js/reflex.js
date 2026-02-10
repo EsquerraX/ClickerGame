@@ -1,43 +1,59 @@
-let jugando = false;
-let inicioTiempo = 0;
+let esperando = false;
+let tiempoInicio = 0;
+let timeoutID = null;
 
+const area = document.getElementById("area");
+const msg = document.getElementById("msg");
+
+// =========================
+// INICIAR JUEGO
+// =========================
 function iniciarJuego() {
-  if (jugando) return;
+  if (esperando) return;
 
-  if (!gastarTiempo(5)) {
-    document.getElementById("msg").textContent = "⛔ No tienes tiempo suficiente";
+  msg.textContent = "Prepárate…";
+  area.textContent = "";
+  area.style.background = "#111";
+
+  const espera = Math.random() * 2000 + 1000;
+
+  timeoutID = setTimeout(() => {
+    esperando = true;
+    tiempoInicio = Date.now();
+    area.style.background = "#00ffcc";
+    area.textContent = "¡TOCA!";
+  }, espera);
+}
+
+// =========================
+// CLICK / TOUCH
+// =========================
+area.addEventListener("click", reaccion);
+area.addEventListener("touchstart", reaccion, { passive: true });
+
+function reaccion() {
+  if (!esperando) {
+    msg.textContent = "❌ Muy pronto…";
+    clearTimeout(timeoutID);
+    resetear();
     return;
   }
 
-  jugando = true;
-  document.getElementById("msg").textContent = "Espera...";
-  document.getElementById("area").innerHTML = "";
+  const tiempoReaccion = Date.now() - tiempoInicio;
+  msg.textContent = `⚡ ${tiempoReaccion} ms`;
 
-  const delay = Math.random() * 3000 + 1000;
+  // recompensa
+  const recompensa = Math.max(1, Math.floor(300 / tiempoReaccion));
+  ganarTiempo(recompensa);
 
-  setTimeout(() => {
-    document.getElementById("msg").textContent = "¡AHORA!";
-    const btn = document.createElement("button");
-    btn.textContent = "CLICK";
-    btn.onclick = reaccionar;
-    document.getElementById("area").appendChild(btn);
-    inicioTiempo = Date.now();
-  }, delay);
+  resetear();
 }
 
-function reaccionar() {
-  const tiempoReaccion = Date.now() - inicioTiempo;
-  let ganancia = 0;
-
-  if (tiempoReaccion < 300) ganancia = 20;
-  else if (tiempoReaccion < 500) ganancia = 10;
-  else if (tiempoReaccion < 800) ganancia = 5;
-
-  ganarTiempo(ganancia);
-
-  document.getElementById("msg").textContent =
-    `⏱️ ${tiempoReaccion} ms → +${ganancia} ⏳`;
-
-  document.getElementById("area").innerHTML = "";
-  jugando = false;
+// =========================
+// RESET
+// =========================
+function resetear() {
+  esperando = false;
+  area.style.background = "#111";
+  area.textContent = "Esperando…";
 }
